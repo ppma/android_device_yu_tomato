@@ -18,6 +18,8 @@ package org.cyanogenmod.hardware;
 
 import org.cyanogenmod.hardware.util.FileUtils;
 
+import android.os.SystemProperties;
+
 public class TapToWake {
 
     private static String CONTROL_PATH = "/sys/devices/virtual/touchscreen/touchscreen_dev/gesture_ctrl";
@@ -27,11 +29,7 @@ public class TapToWake {
     }
 
     public static boolean isEnabled()  {
-        boolean enabled = false;
-        String state = FileUtils.readOneLine(CONTROL_PATH);
-        if (state != null)
-            enabled = (Long.decode(state) & 0x200) == 0x200;
-        return enabled;
+        return SystemProperties.get("persist.sys.fastfoodenable").equals("true")
     }
 
     public static boolean setEnabled(boolean state)  {
